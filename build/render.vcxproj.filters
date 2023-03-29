@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\argparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\cylinder_ring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\edge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\face.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\kdtree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\meshdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\photon_mapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\radiosity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\raytracer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\raytree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\OpenGLCanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\OpenGLRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\argparser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\boundingbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\cylinder_ring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\edge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\face.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\hit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\kdtree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\meshdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\photon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\photon_mapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\point_graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\primitive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\radiosity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\raytracer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\raytree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\vectors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\DANTK\Documents\GitHub\ACG-Final-Pointilisim\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3CFA6F50-E3BB-3496-A6E6-2AE1BFA16AAC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1D60D1E1-D3E2-35E3-B084-FFFAA39069D5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
