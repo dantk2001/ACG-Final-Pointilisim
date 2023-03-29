@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\wangk20\Documents\ACG-Final-Pointilisim\src\CMakeFiles\83ad93039571256721a0938c8e8602d8\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9F3DF79A-9F18-3001-9236-645DDE07F10D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

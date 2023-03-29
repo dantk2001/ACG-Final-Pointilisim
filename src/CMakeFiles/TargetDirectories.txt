@@ -1,0 +1,3 @@
+C:/Users/wangk20/Documents/ACG-Final-Pointilisim/src/CMakeFiles/render.dir
+C:/Users/wangk20/Documents/ACG-Final-Pointilisim/src/CMakeFiles/ALL_BUILD.dir
+C:/Users/wangk20/Documents/ACG-Final-Pointilisim/src/CMakeFiles/ZERO_CHECK.dir

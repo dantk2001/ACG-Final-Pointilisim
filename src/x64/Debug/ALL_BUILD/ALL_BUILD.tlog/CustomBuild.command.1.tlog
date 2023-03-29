@@ -1,0 +1,10 @@
+^C:\USERS\WANGK20\DOCUMENTS\ACG-FINAL-POINTILISIM\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/wangk20/Documents/ACG-Final-Pointilisim/src -BC:/Users/wangk20/Documents/ACG-Final-Pointilisim/src --check-stamp-file C:/Users/wangk20/Documents/ACG-Final-Pointilisim/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

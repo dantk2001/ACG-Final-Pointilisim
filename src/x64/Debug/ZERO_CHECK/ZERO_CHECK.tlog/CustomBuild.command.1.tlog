@@ -1,0 +1,10 @@
+^C:\USERS\WANGK20\DOCUMENTS\ACG-FINAL-POINTILISIM\SRC\CMAKEFILES\83AD93039571256721A0938C8E8602D8\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/wangk20/Documents/ACG-Final-Pointilisim/src -BC:/Users/wangk20/Documents/ACG-Final-Pointilisim/src --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/wangk20/Documents/ACG-Final-Pointilisim/src/hw3.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
