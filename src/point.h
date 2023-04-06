@@ -27,6 +27,12 @@ class Point {
   const Vec3f& getColor() const { return color; }
   const int getID() const { return id; }
   int getTimesCombined() const { return times_combined; }
+  void printNeighbors() const {
+    std::cout << "Printing neighbors of " << id << std::endl;
+    for (std::set<int>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {
+      std::cout << *it << " ";
+    } std::cout << std::endl;
+  }
 
   // MODIFIERS
   void setNeighbors(std::set<int> n) { neighbors = n; }
@@ -36,7 +42,7 @@ class Point {
   Vec3f position;
   Vec3f color;
   int id;
-  int times_combined;
+  int times_combined; // at start of init is 0
   std::set<int> neighbors;
 };
 
