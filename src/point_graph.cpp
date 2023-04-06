@@ -32,8 +32,6 @@ void PointGraph::GraphPoints() {
     int cols = GLOBAL_args->mesh_data->width  / div;
     double y_spacing = GLOBAL_args->mesh_data->height / div;
     double x_spacing = GLOBAL_args->mesh_data->width  / div;
-    rows = 3;
-    cols = 4;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             float myX = (i+0.5)*x_spacing; // not sure if some of these
