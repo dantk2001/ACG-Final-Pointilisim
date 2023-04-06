@@ -52,6 +52,7 @@ extern void RadiositySubdivide();
 extern void RadiosityClear();
 extern void RaytracerClear();
 extern void PhotonMappingClear();
+extern void PopulatePointGraph();
 
 extern void cameraTranslate(float x, float y);
 extern void cameraRotate(float x, float y);
@@ -249,6 +250,7 @@ extern void TraceRay(float x, float y);
 
     case (KEY_1) {
       printf("Pressed key \"1\" yippee!\n");
+      PopulatePointGraph();
       break;
     }
 

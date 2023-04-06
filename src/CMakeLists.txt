@@ -136,6 +136,7 @@ set (SRCS
   ${PROJECT_SOURCE_DIR}/photon_mapping.cpp
   ${PROJECT_SOURCE_DIR}/point.h
   ${PROJECT_SOURCE_DIR}/point_graph.h
+  ${PROJECT_SOURCE_DIR}/point_graph.cpp
   ${PROJECT_SOURCE_DIR}/primitive.h
   ${PROJECT_SOURCE_DIR}/radiosity.h
   ${PROJECT_SOURCE_DIR}/radiosity.cpp

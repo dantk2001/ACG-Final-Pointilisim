@@ -40,6 +40,9 @@
     <ClCompile Include="C:\Users\wangk20\Documents\ACG-Final-Pointilisim\src\photon_mapping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\wangk20\Documents\ACG-Final-Pointilisim\src\point_graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\wangk20\Documents\ACG-Final-Pointilisim\src\radiosity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

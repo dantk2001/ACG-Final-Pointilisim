@@ -13,6 +13,7 @@ class Mesh;
 class RayTracer;
 class Radiosity;
 class PhotonMapping;
+class PointGraph;
 class BoundingBox;
 
 // ======================================================================
@@ -58,8 +59,8 @@ public:
   RayTracer *raytracer;
   Radiosity *radiosity;
   PhotonMapping *photon_mapping;
+  PointGraph *point_graph;
   BoundingBox *bbox;
-
 
 };
 

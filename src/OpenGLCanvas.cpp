@@ -175,6 +175,7 @@ void RadiosityClear();
 void RaytracerClear();
 void PhotonMappingClear();
 void PackMesh();
+void PopulatePointGraph();
 }
 
 void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int mods) {
@@ -345,6 +346,7 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
 
     case '1': case '!': {
       printf("Pressed key \"1\" yippee!\n");
+      PopulatePointGraph();
       break;
     }
 

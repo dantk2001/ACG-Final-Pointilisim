@@ -7,6 +7,7 @@
 #include "face.h"
 #include "primitive.h"
 #include "photon_mapping.h"
+#include "point_graph.h"
 #include "boundingbox.h"
 #include "camera.h"
 #include <random>

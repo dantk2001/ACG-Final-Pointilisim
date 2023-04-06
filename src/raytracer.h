@@ -11,6 +11,7 @@ class Mesh;
 class ArgParser;
 class Radiosity;
 class PhotonMapping;
+class PointGraph;
 
 // ====================================================================
 // ====================================================================
@@ -36,6 +37,7 @@ public:
   // set access to the other modules for hybrid rendering options
   void setRadiosity(Radiosity *r) { radiosity = r; }
   void setPhotonMapping(PhotonMapping *pm) { photon_mapping = pm; }
+  void setPointGraph(PointGraph *pg) { point_graph = pg; }
 
   // casts a single ray through the scene geometry and finds the closest hit
   bool CastRay(const Ray &ray, Hit &h, bool use_sphere_patches) const;
@@ -53,6 +55,7 @@ private:
   ArgParser *args;
   Radiosity *radiosity;
   PhotonMapping *photon_mapping;
+  PointGraph *point_graph;
 
 public:
   bool render_to_a;

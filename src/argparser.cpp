@@ -14,6 +14,8 @@
 #include "meshdata.h"
 #include "boundingbox.h"
 #include "camera.h"
+#include "point.h"
+#include "point_graph.h"
 
 #if __APPLE__
 #include "matrix.h"
@@ -148,6 +150,7 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
   radiosity = NULL;
   photon_mapping = NULL;
   mesh = NULL;
+  point_graph = NULL;
   
   Load();
   GLOBAL_args = this;
@@ -161,6 +164,7 @@ void ArgParser::Load() {
   delete radiosity;
   delete photon_mapping;
   delete mesh;
+  delete point_graph;
   
   mesh = new Mesh();
   mesh->Load(this);
@@ -168,13 +172,16 @@ void ArgParser::Load() {
   raytracer = new RayTracer(mesh,this);
   radiosity = new Radiosity(mesh,this);
   photon_mapping = new PhotonMapping(mesh,this);
+  point_graph = new PointGraph(mesh,this);
 
   raytracer->setRadiosity(radiosity);
   raytracer->setPhotonMapping(photon_mapping);
+  raytracer->setPointGraph(point_graph);
   radiosity->setRayTracer(raytracer);
   radiosity->setPhotonMapping(photon_mapping);
   photon_mapping->setRayTracer(raytracer);
   photon_mapping->setRadiosity(radiosity);
+  point_graph->setRayTracer(raytracer);
 }
 
 // ================================================================

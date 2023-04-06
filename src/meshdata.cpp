@@ -13,6 +13,7 @@
 #include "raytree.h"
 #include "radiosity.h"
 #include "photon_mapping.h"
+#include "point_graph.h"
 #include "camera.h"
 
 // ====================================================================
@@ -92,6 +93,9 @@ extern "C" {
     GLOBAL_args->mesh->camera->glPlaceCamera();
   }
 
+  void PopulatePointGraph() {
+    GLOBAL_args->point_graph->GraphPoints();
+  }
 }
 
 // ====================================================================
