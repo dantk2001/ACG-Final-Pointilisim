@@ -350,6 +350,11 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
       break;
     }
 
+    case '2': case '@': {
+      //draw circles here????
+      break;
+    }
+
     default:
       std::cout << "UNKNOWN KEYBOARD INPUT  '" << (char)key << "'" << std::endl;
     }

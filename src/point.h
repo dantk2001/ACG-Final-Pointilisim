@@ -40,13 +40,10 @@ class Point {
 
   // MODIFIERS
   void setNeighbors(std::set<int> n) { neighbors = n; }
-<<<<<<< HEAD
   void Lock() { lock = true; }
-=======
   //for combination algorithm
   void removeNeighbor(int id) { neighbors.erase(id); }
   void updateId() { id--; }
->>>>>>> main
 
  private:
   // REPRESENTATION
