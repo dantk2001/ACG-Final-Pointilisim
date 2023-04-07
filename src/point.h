@@ -27,6 +27,7 @@ class Point {
   const Vec3f& getColor() const { return color; }
   const int getID() const { return id; }
   int getTimesCombined() const { return times_combined; }
+  std::set<int> getNeighbors() { return neighbors; }
   void printNeighbors() const {
     std::cout << "Printing neighbors of " << id << std::endl;
     for (std::set<int>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {
@@ -36,6 +37,9 @@ class Point {
 
   // MODIFIERS
   void setNeighbors(std::set<int> n) { neighbors = n; }
+  //for combination algorithm
+  void removeNeighbor(int id) { neighbors.erase(id); }
+  void updateId() { id--; }
 
  private:
   // REPRESENTATION
