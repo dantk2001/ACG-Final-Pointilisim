@@ -154,7 +154,7 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
   
   Load();
   GLOBAL_args = this;
-  packMesh(mesh_data,raytracer,radiosity,photon_mapping);
+  packMesh(mesh_data,raytracer,radiosity,photon_mapping,point_graph);
 }
 
 // ================================================================
@@ -217,13 +217,13 @@ void ArgParser::separatePathAndFile(const std::string &input, std::string &path,
 
 // ================================================================
 
-void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, PhotonMapping *photonmapping) {
+void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, PhotonMapping *photonmapping, PointGraph *pointgraph) {
 
   GLOBAL_args->mesh->camera->glPlaceCamera();
 
   // new desired counts
   int triCount = raytracer->triCount() + RayTree::triCount() + radiosity->triCount() + photonmapping->triCount();
-  int pointCount = photonmapping->pointCount();
+  int pointCount = photonmapping->pointCount() + pointgraph->pointCount();
 
   mesh_data->meshTriCount = triCount;
   if (mesh_data->meshTriCount > mesh_data->meshTriCount_allocated) {
@@ -248,7 +248,7 @@ void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, P
   RayTree::packMesh(current);
   radiosity->packMesh(current);
   photonmapping->packMesh(current,current_points);
-  
+  pointgraph->packMesh(current,current_points);
 }
 
 // ================================================================

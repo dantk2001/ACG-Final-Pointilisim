@@ -65,6 +65,6 @@ public:
 };
 
 extern ArgParser *GLOBAL_args;
-void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, PhotonMapping *photonmapping);
+void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, PhotonMapping *photonmapping, PointGraph *pointgraph);
 
 #endif

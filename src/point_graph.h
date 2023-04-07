@@ -32,11 +32,18 @@ class PointGraph {
   }
   ~PointGraph() { Clear(); }
 
-  void setRayTracer(RayTracer* r) { raytracer = r; }
-  // populate graph
-  void GraphPoints();
+  // ACCESSORS
+  Point* getPoint(int i) { return graph[i]; }
+  int pointCount() { return graph.size(); }
+  void VisualizeGraph(); // visualizer
 
+  // MODIFIERS
+  void setRayTracer(RayTracer* r) { raytracer = r; }
+  void GraphPoints(); // populate graph
   void Clear();
+
+  // RENDERING ??
+  void packMesh(float* &current, float* &current_points);
   
  private:
   // REPRESENTATION

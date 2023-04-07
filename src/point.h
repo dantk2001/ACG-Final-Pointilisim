@@ -20,7 +20,7 @@ class Point {
 
   // CONSTRUCTOR
   Point(const Vec3f &p, const Vec3f &c, const int id_, int t, std::set<int> n) :
-    position(p),color(c),id(id_),times_combined(t),neighbors(n) {}
+    position(p),color(c),id(id_),times_combined(t),neighbors(n) { lock = false; }
 
   // ACCESSORS
   const Vec3f& getPosition() const { return position; }
@@ -34,8 +34,12 @@ class Point {
     } std::cout << std::endl;
   }
 
+  // ACCESSORS
+  bool isLocked() { return lock; }
+
   // MODIFIERS
   void setNeighbors(std::set<int> n) { neighbors = n; }
+  void Lock() { lock = true; }
 
  private:
   // REPRESENTATION
@@ -44,6 +48,7 @@ class Point {
   int id;
   int times_combined; // at start of init is 0
   std::set<int> neighbors;
+  bool lock;
 };
 
 #endif

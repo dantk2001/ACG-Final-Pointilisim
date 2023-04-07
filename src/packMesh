@@ -1,0 +1,19 @@
+argparser.cpp:  raytracer->setRadiosity(radiosity);
+argparser.cpp:  raytracer->setPhotonMapping(photon_mapping);
+argparser.cpp:  raytracer->setPointGraph(point_graph);
+argparser.cpp:  int triCount = raytracer->triCount() + RayTree::triCount() + radiosity->triCount() + photonmapping->triCount();
+argparser.cpp:  raytracer->packMesh(current);
+meshdata.cpp:    GLOBAL_args->raytracer->pixels_a.clear();
+meshdata.cpp:    GLOBAL_args->raytracer->pixels_b.clear();
+meshdata.cpp:    GLOBAL_args->raytracer->render_to_a = true;
+photon_mapping.cpp:  if (!raytracer->CastRay(r,h,false)) return;
+photon_mapping.cpp:      if (!raytracer->CastRay(r,h,false)) continue;
+raytracer.cpp:  color = GLOBAL_args->raytracer->TraceRay(r,hit,GLOBAL_args->mesh_data->num_bounces);
+raytracer.cpp:    if (GLOBAL_args->raytracer->render_to_a) {
+raytracer.cpp:      GLOBAL_args->raytracer->pixels_b.clear();
+raytracer.cpp:      GLOBAL_args->raytracer->render_to_a = false;
+raytracer.cpp:      GLOBAL_args->raytracer->pixels_a.clear();
+raytracer.cpp:      GLOBAL_args->raytracer->render_to_a = true;
+raytracer.cpp:  if (GLOBAL_args->raytracer->render_to_a) {
+raytracer.cpp:    GLOBAL_args->raytracer->pixels_a.push_back(p);
+raytracer.cpp:    GLOBAL_args->raytracer->pixels_b.push_back(p);

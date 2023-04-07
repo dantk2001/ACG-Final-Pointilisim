@@ -225,7 +225,10 @@ Vec3f PixelGetPos(double i, double j) {
   return r.getOrigin()+distance*r.getDirection();
 }
 
-
+// so point graph class can access this as well
+Vec3f RayTracer::PublicPixelGetPos(double i, double j) {
+  return PixelGetPos(i,j);
+}
 
 
 

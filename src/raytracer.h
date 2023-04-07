@@ -45,6 +45,8 @@ public:
   // does the recursive work
   Vec3f TraceRay(Ray &ray, Hit &hit, int bounce_count = 0) const;
 
+  Vec3f PublicPixelGetPos(double i, double j);
+
 private:
 
   void drawVBOs_a();

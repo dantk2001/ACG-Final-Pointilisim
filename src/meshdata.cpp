@@ -64,7 +64,7 @@ extern "C" {
   }
   
   void PackMesh() {
-    packMesh(GLOBAL_args->mesh_data, GLOBAL_args->raytracer, GLOBAL_args->radiosity, GLOBAL_args->photon_mapping);
+    packMesh(GLOBAL_args->mesh_data, GLOBAL_args->raytracer, GLOBAL_args->radiosity, GLOBAL_args->photon_mapping, GLOBAL_args->point_graph);
   }
 
   void Load() {
