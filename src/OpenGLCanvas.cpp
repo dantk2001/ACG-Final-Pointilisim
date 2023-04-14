@@ -56,8 +56,10 @@ void OpenGLCanvas::initialize(ArgParser *_args, MeshData *_mesh_data, OpenGLRend
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+  srand(time(NULL)); // seed random number generator
+
   // Create a GLFW window
-  window = glfwCreateWindow(mesh_data->width,mesh_data->height, "ACG HW1 MESHES", NULL, NULL);
+  window = glfwCreateWindow(mesh_data->width,mesh_data->height, "Pointilism", NULL, NULL);
   if (!window) {
     std::cerr << "ERROR: Failed to open GLFW window" << std::endl;
     glfwTerminate();
@@ -176,6 +178,7 @@ void RaytracerClear();
 void PhotonMappingClear();
 void PackMesh();
 void PopulatePointGraph();
+void CombinePoints();
 }
 
 void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int mods) {
@@ -351,7 +354,8 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
     }
 
     case '2': case '@': {
-      //draw circles here????
+      CombinePoints();
+      //DrawCircles();
       break;
     }
 

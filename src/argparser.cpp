@@ -86,6 +86,7 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
   mesh_data = _mesh_data;
   DefaultValues();
 
+  
   // parse the command line arguments
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == std::string("--input")) {
@@ -96,49 +97,9 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
       mesh_data->width = atoi(argv[i]);
       i++; assert (i < argc); 
       mesh_data->height = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_form_factor_samples")) {
-      i++; assert (i < argc); 
-      mesh_data->num_form_factor_samples = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--sphere_rasterization")) {
-      i++; assert (i < argc); 
-      mesh_data->sphere_horiz = atoi(argv[i]);
-      if (mesh_data->sphere_horiz % 2 == 1) mesh_data->sphere_horiz++; 
-      i++; assert (i < argc); 
-      mesh_data->sphere_vert = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--cylinder_ring_rasterization")) {
-      i++; assert (i < argc); 
-      mesh_data->cylinder_ring_rasterization = atoi(argv[i]);
-      
-    } else if (std::string(argv[i]) == std::string("--num_bounces")) {
-      i++; assert (i < argc); 
-      mesh_data->num_bounces = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_shadow_samples")) {
-      i++; assert (i < argc); 
-      mesh_data->num_shadow_samples = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_antialias_samples")) {
-      i++; assert (i < argc); 
-      mesh_data->num_antialias_samples = atoi(argv[i]);
-      assert (mesh_data->num_antialias_samples > 0);
-    } else if (std::string(argv[i]) == std::string("--num_glossy_samples")) {
-      i++; assert (i < argc); 
-      mesh_data->num_glossy_samples = atoi(argv[i]);
-      assert (mesh_data->num_glossy_samples > 0);
-    } else if (std::string(argv[i]) == std::string("--ambient_light")) {
-      i++; assert (i < argc);
-      float r = atof(argv[i]);
-      i++; assert (i < argc);
-      float g = atof(argv[i]);
-      i++; assert (i < argc);
-      float b = atof(argv[i]);
-      mesh_data->ambient_light = {r,g,b};
-    } else if (std::string(argv[i]) == std::string("--num_photons_to_shoot")) {
-      i++; assert (i < argc);
-      mesh_data->num_photons_to_shoot = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_photons_to_collect")) {
-      i++; assert (i < argc);
-      mesh_data->num_photons_to_collect = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--gather_indirect")) {
-      mesh_data->gather_indirect = true;
+    } else if (std::string(argv[i]) == std::string("--threshold")) {
+      i++; assert(i < argc);
+      GLOBAL_args->threshold = atof(argv[i]);
     } else {
       std::cout << "ERROR: unknown command line argument " 
                 << i << ": '" << argv[i] << "'" << std::endl;

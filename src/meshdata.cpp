@@ -96,6 +96,10 @@ extern "C" {
   void PopulatePointGraph() {
     GLOBAL_args->point_graph->GraphPoints();
   }
+
+  void CombinePoints() {
+      GLOBAL_args->point_graph->CombinePoints();
+  }
 }
 
 // ====================================================================

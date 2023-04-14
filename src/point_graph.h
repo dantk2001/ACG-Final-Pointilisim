@@ -40,7 +40,9 @@ class PointGraph {
   // MODIFIERS
   void setRayTracer(RayTracer* r) { raytracer = r; }
   void GraphPoints(); // populate graph
+  void CombinePoints();
   void Clear();
+  void cleanUpNeighbors(std::set<int> neighbors, int id1, int id2);
 
   // RENDERING ??
   void packMesh(float* &current, float* &current_points);

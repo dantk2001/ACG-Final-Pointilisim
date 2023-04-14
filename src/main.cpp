@@ -46,8 +46,6 @@ int main(int argc, const char * argv[]) {
 #include "point.h"
 #include "utils.h"
 
-#define PI 3.14159265358979323846
-
 void drawCircle(float x, float y, float radius)
 {
     glBegin(GL_TRIANGLE_FAN);
@@ -60,34 +58,6 @@ void drawCircle(float x, float y, float radius)
         glVertex2f(x + dx, y + dy);
     }
     glEnd();
-}
-
-std::set<int> getNeighbors(int row, int col, int ROWS, int COLS) {
-    std::set<int> n;
-    //up, down, left, right
-    //diagonals
-    // Find the indices of the current element's neighbors
-    for (int i = row - 1; i <= row + 1; i++) {
-        for (int j = col - 1; j <= col + 1; j++) {
-            // Ignore the current element itself and out-of-bounds indices
-            if (i >= 0 && i < ROWS && j >= 0 && j < COLS && !(i == row && j == col)) {
-                n.insert((i * ROWS) + j);
-            }
-        }
-    }
-    return n;
-}
-
-void cleanUpCombination(std::vector<Point>* circles, int id) {
-    //subtract 1 from all index's after circle removed
-    //remove neighbor from everything
-    for (int i = 0; i < circles->size(); i++) {
-        if (i > id) {
-            (*circles)[i].updateId();
-        }
-        (*circles)[i].removeNeighbor(id);
-    }
-    //this is broken, figure out how to repopulate neighbors correctly later
 }
 
 int main(int argc, const char* argv[])
@@ -128,45 +98,6 @@ int main(int argc, const char* argv[])
             Point p(position, color, (4 * i) + j, 0, getNeighbors(i, j, 8, 8));
             circles.push_back(p);
         }
-    }
-
-    //combination algorithm
-    std::vector<int> deleteList;
-    for (int i = 0; i < circles.size(); i++) {
-        if (circles[i].getTimesCombined() == 0 && std::count(deleteList.begin(), deleteList.end(), i) == 0) {
-            std::set<int> n = circles[i].getNeighbors();
-            std::set<int>::iterator itr;
-            std::pair<int, float> closest = { i, 2.0f };
-            for (itr = n.begin(); itr != n.end(); itr++) {
-                float dist = abs(DistanceBetweenTwoPoints(circles[i].getColor(), circles[*itr].getColor()));
-                //if (itr == n.begin()) {
-                //    std::cout << dist << std::endl;
-                //}
-                if (dist < closest.second && dist <= threshold) {
-                    //std::cout << "new closest" << std::endl;
-                    closest = std::make_pair(*itr, dist);
-                }
-            }
-            //found one within threshold
-            if (closest.first != i) {
-                std::cout << "combining : " << i << " " << closest.first << std::endl;
-                Vec3f avgColor = (circles[i].getColor() + circles[closest.second].getColor());
-                avgColor /= 2.0f;
-                Vec3f avgPosition = (circles[i].getPosition() + circles[closest.second].getPosition());
-                avgPosition /= 2.0f;
-                circles[i] = Point(avgPosition, avgColor, i, 1, getNeighbors(i / 8, i % 8, 8, 8));
-                //remove the one being absorbed from all neighbors lists and subtract one from all
-                //after the removed index
-                cleanUpCombination(&circles, closest.first);
-                deleteList.push_back(closest.first);
-            }
-        }
-    }
-
-    //remove all circles in delete list
-    for (int i = 0; i < deleteList.size(); i++) {
-        //delete cirlce
-        circles.erase(circles.begin() + (deleteList[i] - 1 - i));
     }
 
     while (!glfwWindowShouldClose(window))
