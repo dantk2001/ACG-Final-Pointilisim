@@ -116,11 +116,15 @@ void PointGraph::CombinePoints() {
             //found one within threshold
             if (index_two != index) {
                 Point* point_two = graph.find(closest.second)->second;
+
+                float p1_weight = (float)(point->getTimesCombined() + 1.0);
+                float p2_weight = (float)(point_two->getTimesCombined() + 1.0);
+
                 //std::cout << "combining : " << index << " " << closest.first << std::endl;
-                Vec3f avgColor = (point->getColor() + point_two->getColor());
-                avgColor /= 2.0f;
-                Vec3f avgPosition = (point->getPosition() + point_two->getPosition());
-                avgPosition /= 2.0f;
+                Vec3f avgColor = ((point->getColor() * p1_weight) + (point_two->getColor() * p2_weight));
+                avgColor /= p1_weight + p2_weight; //2.0f;
+                Vec3f avgPosition = ((point->getPosition() * p1_weight) + (point_two->getPosition() * p2_weight));
+                avgPosition /= p1_weight + p2_weight; //2.0f;
                 //combine neighbors
                 std::set<int> n1 = point->getNeighbors();
                 std::set<int> n2 = point_two->getNeighbors();
