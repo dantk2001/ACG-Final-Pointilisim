@@ -42,7 +42,7 @@ class Point {
   void setNeighbors(std::set<int> n) { neighbors = n; }
   void Lock() { lock = true; }
   //for combination algorithm
-  void removeNeighbor(int id) { neighbors.erase(id); }
+  void removeNeighbor(int i) { neighbors.erase(i); }
   void updateId() { id--; }
 
  private:

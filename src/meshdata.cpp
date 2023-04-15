@@ -102,7 +102,7 @@ extern "C" {
   }
 
   void CombinePoints() {
-      GLOBAL_args->point_graph->CombinePoints();
+    GLOBAL_args->point_graph->CombinePoints();
   }
 }
 
