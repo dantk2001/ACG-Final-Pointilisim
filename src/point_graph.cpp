@@ -60,8 +60,9 @@ void PointGraph::GraphPoints() {
 }
 
 void PointGraph::Clear() {
+    if (graph.size() == 0) return;
     for (std::map<int,Point*>::iterator it = graph.begin(); it != graph.end(); it++) {
-        delete it->second;
+        if (it->second != NULL) delete it->second;
     }
 }
 

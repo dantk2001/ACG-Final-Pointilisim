@@ -52,7 +52,9 @@ extern void RadiositySubdivide();
 extern void RadiosityClear();
 extern void RaytracerClear();
 extern void PhotonMappingClear();
+extern void PointGraphClear();
 extern void PopulatePointGraph();
+extern void CombinePoints();
 
 extern void cameraTranslate(float x, float y);
 extern void cameraRotate(float x, float y);
@@ -181,6 +183,7 @@ extern void TraceRay(float x, float y);
       RaytracerClear();
       RadiosityClear();
       PhotonMappingClear();
+      //PointGraphClear();
       PackMesh();
       [renderer reGenerate];
       break;
@@ -252,6 +255,13 @@ extern void TraceRay(float x, float y);
       printf("Pressed key \"1\" yippee!\n");
       PopulatePointGraph();
       break;
+    }
+
+    case (KEY_2) {
+      printf("Pressed key \"2\" wowowow!\n");
+      CombinePoints();
+      PackMesh();
+      [renderer reGenerate];
     }
 
     case (KEY_Q): 

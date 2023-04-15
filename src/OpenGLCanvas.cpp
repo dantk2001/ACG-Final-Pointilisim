@@ -176,6 +176,7 @@ void RadiositySubdivide();
 void RadiosityClear();
 void RaytracerClear();
 void PhotonMappingClear();
+void PointGraphClear();
 void PackMesh();
 void PopulatePointGraph();
 void CombinePoints();
@@ -288,6 +289,7 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
       RadiosityClear();
       RaytracerClear();
       PhotonMappingClear();
+      //PointGraphClear();
       break; 
     }
     case 'x':  case 'X': {
@@ -354,6 +356,7 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
     }
 
     case '2': case '@': {
+      printf("Pressed key \"2\" wowowow!\n");
       CombinePoints();
       //DrawCircles();
       break;
