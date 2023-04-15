@@ -27,12 +27,11 @@ void PointGraph::GraphPoints() {
     int div = 5;
     int rows = GLOBAL_args->mesh_data->height / div;
     int cols = GLOBAL_args->mesh_data->width  / div;
-    double y_spacing = GLOBAL_args->mesh_data->height / div;
-    double x_spacing = GLOBAL_args->mesh_data->width  / div;
+    std::cout << rows << " x " << cols << std::endl;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            float myX = (i+0.5) * div;//*x_spacing; // not sure if some of these
-            float myY = (j+0.5) * div;//*y_spacing; // should be switched?
+            float myX = (j+0.5) * div;//*x_spacing; // not sure if some of these
+            float myY = (i+0.5) * div;//*y_spacing; // should be switched?
             Vec3f color = VisualizeTraceRay(myX, myY);
             color = Vec3f(linear_to_srgb(color.r()),
                           linear_to_srgb(color.g()),
@@ -53,7 +52,7 @@ void PointGraph::GraphPoints() {
                 if (j != 0) tmp.insert(next_point_id + cols - 1); // down left
                 if (cols - j != 1) tmp.insert(next_point_id + cols + 1); // down right
             }
-
+            
             graph[next_point_id] = new Point(Vec3f(myX, myY, 0), color, next_point_id, 0, tmp);
             next_point_id++;
         }
