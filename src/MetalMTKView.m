@@ -183,7 +183,7 @@ extern void TraceRay(float x, float y);
       RaytracerClear();
       RadiosityClear();
       PhotonMappingClear();
-      //PointGraphClear();
+      PointGraphClear();
       PackMesh();
       [renderer reGenerate];
       break;

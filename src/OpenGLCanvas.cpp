@@ -289,7 +289,7 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
       RadiosityClear();
       RaytracerClear();
       PhotonMappingClear();
-      //PointGraphClear();
+      PointGraphClear();
       break; 
     }
     case 'x':  case 'X': {

@@ -19,8 +19,6 @@
 void PointGraph::GraphPoints() {
     // throw away everything beforehand
     Clear();
-    graph.clear();
-    next_point_id = 0;
 
     // GLOBAL_args->mesh_data->height and width are 500x500
     // let's just do a nice 100x100 for now.
@@ -64,6 +62,8 @@ void PointGraph::Clear() {
     for (std::map<int,Point*>::iterator it = graph.begin(); it != graph.end(); it++) {
         if (it->second != NULL) delete it->second;
     }
+    graph.clear();
+    next_point_id = 0;
 }
 
 void PointGraph::packMesh(float* &current, float* &current_points) {
