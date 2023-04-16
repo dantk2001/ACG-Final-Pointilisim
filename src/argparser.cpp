@@ -99,7 +99,7 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
       mesh_data->height = atoi(argv[i]);
     } else if (std::string(argv[i]) == std::string("--threshold")) {
       i++; assert(i < argc);
-      GLOBAL_args->threshold = atof(argv[i]);
+      threshold = atof(argv[i]);
     } else if (std::string(argv[i]) == std::string("--num_bounces")) {
       i++; assert(i < argc);
       mesh_data->num_bounces = atoi(argv[i]);

@@ -37,6 +37,8 @@ class PointGraph {
   int pointCount() { return graph.size(); }
   void VisualizeGraph(); // visualizer
 
+  void PointGraph::printGraph();
+
   // MODIFIERS
   void setRayTracer(RayTracer* r) { raytracer = r; }
   void GraphPoints(); // populate graph
@@ -53,6 +55,7 @@ class PointGraph {
   ArgParser *args;
   RayTracer* raytracer;
   std::map<int,Point*> graph; // map of nodes, each node contains neighbors (edges)
+  std::map<int, Point*> addList;
   int next_point_id;
 };
 

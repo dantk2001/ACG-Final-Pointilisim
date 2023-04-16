@@ -10,8 +10,6 @@
 #include "matrix.h"
 #include "boundingbox.h"
 
-#define PI 3.14159265358979323846
-
 // NOTE: These functions are also called by the Mac Metal Objective-C
 // code, so we need this extern to allow C code to call C++ functions
 // (without function name mangling confusion).
@@ -121,7 +119,7 @@ OpenGLRenderer::OpenGLRenderer(MeshData *_mesh_data, ArgParser *args) {
 
     // Swap buffers
     glfwSwapBuffers(OpenGLCanvas::window);
-    glfwPollEvents();  
+    glfwPollEvents();
   }
   
   cleanupVBOs();

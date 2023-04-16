@@ -93,6 +93,8 @@ public:
     addFace(a,b,c,d,material,FACE_TYPE_RASTERIZED); }
   void addOriginalQuad(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *material) {
     addFace(a,b,c,d,material,FACE_TYPE_ORIGINAL); }
+  void addOriginalTriangle(Vertex* a, Vertex* b, Vertex* c, Material* material) {
+      addTriangle(a, b, c, material, FACE_TYPE_ORIGINAL); }
   void addSubdividedQuad(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *material) {
     addFace(a,b,c,d,material,FACE_TYPE_SUBDIVIDED); }
 
@@ -111,6 +113,7 @@ private:
   Vertex* AddEdgeVertex(Vertex *a, Vertex *b);
   Vertex* AddMidVertex(Vertex *a, Vertex *b, Vertex *c, Vertex *d);
   void addFace(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *material, enum FACE_TYPE face_type);
+  //void addTriangle(Vertex* a, Vertex* b, Vertex* c, Material* material, enum FACE_TYPE face_type);
   void removeFaceEdges(Face *f);
   void addPrimitive(Primitive *p); 
 

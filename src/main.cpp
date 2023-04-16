@@ -86,20 +86,6 @@ int main(int argc, const char* argv[])
 
     glfwMakeContextCurrent(window);
 
-    //position(p),color(c),id(id_),times_combined(t),neighbors(n)
-    std::vector<Point> circles;
-    //set neighbors aswell
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            Vec3f color ((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
-            Vec3f position (-0.80f + j * 0.20f, 0.80f - i * 0.20f, 0.1f);
-            Point p(position, color, (4 * i) + j, 0, getNeighbors(i, j, 8, 8));
-            circles.push_back(p);
-        }
-    }
-
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);

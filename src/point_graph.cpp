@@ -54,6 +54,7 @@ void PointGraph::GraphPoints() {
             next_point_id++;
         }
     }
+    //printGraph();
 }
 
 void PointGraph::Clear() {
@@ -65,19 +66,44 @@ void PointGraph::Clear() {
     next_point_id = 0;
 }
 
+/*
+void drawCircle(double x, double y, double z, float radius)
+{
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x, y);
+    for (int i = 0; i <= 360; i++)
+    {
+        float angle = 2 * M_PI * i / 360;
+        float dx = radius * cosf(angle);
+        float dy = radius * sinf(angle);
+        glVertex2f(x + dx, y + dy);
+    }
+    glEnd();
+}
+*/
+
 void PointGraph::packMesh(float* &current, float* &current_points) {
     for (std::map<int,Point*>::iterator it = graph.begin(); it != graph.end(); it++) {
         Vec3f v = raytracer->PublicPixelGetPos(it->second->getPosition().x(),it->second->getPosition().y());
         Vec3f color = it->second->getColor();
         float12 t = { float(v.x()),float(v.y()),float(v.z()),1,   0,0,0,0,   float(color.r()),float(color.g()),float(color.b()),1 };
         memcpy(current_points, &t, sizeof(float)*12); current_points += 12;
+        //drawCircle(v.x(), v.y(), v.z(), it->second->getTimesCombined() * 0.01);
     }
 }
 
 //iterate through this set of neighbors and update the point in the graphs neighbor sets to have new_index instead of index or index_two
 void PointGraph::cleanUpNeighbors(std::set<int> neighbors, int id1, int id2) {
     for (std::set<int>::iterator itr = neighbors.begin(); itr != neighbors.end(); itr++) {
-        Point* p = graph.find(*itr)->second;
+        Point* p;
+        //have to check if a neighbor is in the add list and update from there, not from the graph
+        std::map<int, Point*>::iterator found = graph.find(*itr);
+        if (found == graph.end()) {
+            p = addList.find(*itr)->second;
+        }
+        else {
+            p = graph.find(*itr)->second;
+        }
         std::set<int> n = p->getNeighbors();
         n.erase(id1);
         n.erase(id2);
@@ -86,24 +112,38 @@ void PointGraph::cleanUpNeighbors(std::set<int> neighbors, int id1, int id2) {
     }
 }
 
+void PointGraph::printGraph() {
+    for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
+        std::set<int> n = itr->second->getNeighbors();
+        for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
+            bool isIn = graph.find(*it) != graph.end();
+            if (!isIn) {
+                std::cout << itr->first << " : " << *it << std::endl;
+            }
+        }
+    }
+}
+
 void PointGraph::CombinePoints() {
     //combination algorithm
     std::vector<int> deleteList;
-    std::vector<std::pair<int, Point*>> addList;
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
         int index = itr->first;
         Point* point = itr->second;
         //can change times combined to match with a global variable later
         if (point->getTimesCombined() == 0 && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
             std::set<int> n = point->getNeighbors();
-            std::set<int>::iterator it;
             std::pair<int, float> closest = { index, 2.0f };
-            for (it = n.begin(); it != n.end(); it++) {
-                //should only do combinations with points who have never combined?
-                if (graph.find(*it)->second->getTimesCombined() != 0) {
+            for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
+                //should only do combinations with points who have never combined, have not yet been added to graph, or in delete list
+                std::map<int, Point*>::iterator found = graph.find(*it);
+                if (found == graph.end() || std::count(deleteList.begin(), deleteList.end(), *it) != 0) {
                     continue;
                 }
-                float dist = abs(DistanceBetweenTwoPoints(point->getColor(), graph.find(*it)->second->getColor()));
+                if (found->second->getTimesCombined() != 0) {
+                    continue;
+                }
+                float dist = abs(DistanceBetweenTwoPoints(point->getColor(), found->second->getColor()));
                 //if (itr == n.begin()) {
                 //    std::cout << dist << std::endl;
                 //}
@@ -137,29 +177,33 @@ void PointGraph::CombinePoints() {
                 //make new point with graph next_index
                 Point* new_point = new Point(avgPosition, avgColor, next_point_id, point->getTimesCombined() + 1, n1);
                 //add new one to addList
-                addList.push_back(std::pair<int, Point*>(index, new_point));
+                addList.insert(std::pair<int, Point*>(next_point_id, new_point));
                 next_point_id++;
-                //delete old points
-                delete point;
-                delete point_two;
                 //remove old two from map by adding to deletelist
                 deleteList.push_back(index);
                 deleteList.push_back(index_two);
+                //std::cout << "done combining : " << index << " " << closest.first << std::endl;
             }
         }
     }
 
+    //std::cout << "updating graph" << std::endl;
+
     //remove all points in delete list
     for (int i = 0; i < deleteList.size(); i++) {
         //delete point
+        //std::cout << deleteList[i] << std::endl;
+        delete graph.find(deleteList[i])->second;
         graph.erase(deleteList[i]);
     }
 
     //add all points in add list
-    for (int i = 0; i < addList.size(); i++) {
-        //delete point
-        graph.insert(addList[i]);
+    for (std::map<int, Point*>::iterator itr = addList.begin(); itr != addList.end(); itr++) {
+        //add point
+        graph.insert(*itr);
     }
+
+    addList.clear();
 }
 
 // =========================================================================
