@@ -9,6 +9,8 @@
 #include "meshdata.h"
 #include "matrix.h"
 #include "boundingbox.h"
+#include "point.h"
+#include "point_graph.h"
 
 // NOTE: These functions are also called by the Mac Metal Objective-C
 // code, so we need this extern to allow C code to call C++ functions
@@ -192,6 +194,22 @@ void OpenGLRenderer::updateVBOs() {
   HandleGLError("leaving updateVBOs");
 }
 
+/*
+void drawCircle(float x, float y, float radius, Vec3f color) {
+    glBegin(GL_TRIANGLE_FAN);
+    glColor3f(color[0], color[1], color[2]);
+    glVertex2f(x, y);
+    for (int i = 0; i <= 360; i++)
+    {
+        float angle = 2 * M_PI * i / 360;
+        float dx = radius * cosf(angle);
+        float dy = radius * sinf(angle);
+        glVertex2f(x + dx, y + dy);
+    }
+    glEnd();
+}
+*/
+
 void OpenGLRenderer::drawMesh() const {
   HandleGLError("in drawMesh");
 
@@ -206,6 +224,18 @@ void OpenGLRenderer::drawMesh() const {
   glBindBuffer(GL_ARRAY_BUFFER, mesh_points_VBO);
   glPointSize(2.0);
   glDrawArrays(GL_POINTS, 0, mesh_data->meshPointCount);
+
+  /*
+  PointGraph* graph = GLOBAL_args->point_graph;
+  if (graph != nullptr) {
+      for (int i = 0; i < graph->pointCount(); i++) {
+          Point* p = graph->getPoint(i);
+          Vec3f color = p->getColor();
+          Vec3f position = p->getPosition();
+          drawCircle(position[0], position[1], (p->getTimesCombined() + 1) * 0.01, color);
+      }
+  }
+  */
 
   HandleGLError("leaving drawMesh");
 }

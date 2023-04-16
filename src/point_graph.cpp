@@ -65,7 +65,6 @@ void PointGraph::Clear() {
     graph.clear();
     next_point_id = 0;
 }
-
 /*
 void drawCircle(double x, double y, double z, float radius)
 {
@@ -196,6 +195,8 @@ void PointGraph::CombinePoints() {
         delete graph.find(deleteList[i])->second;
         graph.erase(deleteList[i]);
     }
+
+    std::cout << "number of points combined: " << addList.size() << std::endl;
 
     //add all points in add list
     for (std::map<int, Point*>::iterator itr = addList.begin(); itr != addList.end(); itr++) {
