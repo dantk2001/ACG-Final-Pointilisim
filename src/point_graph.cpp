@@ -23,7 +23,9 @@ void PointGraph::WriteGraph() {
 
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
         Point* p = itr->second;
-        out_file << p->getColor() << " " << p->getPosition() << " " << p->getTimesCombined() << "\n";
+        Vec3f color = p->getColor();
+        Vec3f position = p->getPosition();
+        out_file << color[0] << " " << color[1] << " " << color[2] << " " << position[0] << " " << position[1] << " " << p->getTimesCombined() << "\n";
     }
 
     out_file.close();

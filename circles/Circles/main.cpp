@@ -1,10 +1,8 @@
 #include <GLFW\glfw3.h>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
-#include <fstream>
 #include <iostream>
-#include "vectors.h"
+#include <fstream>
+
+#define M_PI 3.14159265358979323846
 
 void drawCircle(float x, float y, float radius)
 {
@@ -33,8 +31,6 @@ int circles_main(int argc, const char* argv[])
     std::ifstream in_file(argv[1] + '.txt');
     std::string delimiter = ":";
 
-    srand(time(NULL)); // seed random number generator
-
     window = glfwCreateWindow(640, 480, "Circles", NULL, NULL);
     if (!window)
     {
@@ -47,13 +43,16 @@ int circles_main(int argc, const char* argv[])
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        Vec3f color;
-        Vec3f position;
+        float color0;
+        float color1;
+        float color2;
+        float pos0;
+        float pos1;
         int times_combined;
         while (true) {
-            in_file >> color >> position >> times_combined;
-            glColor3f(color[0], color[1], color[2]);
-            drawCircle(position[0], position[1], times_combined * 0.05f);
+            in_file >> color0 >> color1 >> color2 >> pos0 >> pos1 >> times_combined;
+            glColor3f(color0, color1, color2);
+            drawCircle(pos0, pos1, times_combined * 0.05f);
             if (in_file.eof()) {
                 break;
             }
