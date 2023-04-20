@@ -97,6 +97,16 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
       mesh_data->width = atoi(argv[i]);
       i++; assert (i < argc); 
       mesh_data->height = atoi(argv[i]);
+    } else if (std::string(argv[i]) == std::string("--num_bounces")) {
+      i++; assert(i < argc);
+      mesh_data->num_bounces = atoi(argv[i]);
+    } else if (std::string(argv[i]) == std::string("--num_shadow_samples")) {
+      i++; assert(i < argc);
+      mesh_data->num_shadow_samples = atoi(argv[i]);
+    } else if (std::string(argv[i]) == std::string("--num_antialias_samples")) {
+      i++; assert(i < argc);
+      mesh_data->num_antialias_samples = atoi(argv[i]);
+      assert(mesh_data->num_antialias_samples > 0);
     } else if (std::string(argv[i]) == std::string("--threshold")) {
       i++; assert(i < argc);
       threshold = atof(argv[i]);

@@ -21,6 +21,8 @@ void PointGraph::WriteGraph() {
     //Change this to match your own path to Circles
     std::ofstream out_file("../circles/Circles/" + GLOBAL_args->out_file + ".txt");
 
+    out_file << GLOBAL_args->mesh_data->height << " " << GLOBAL_args->mesh_data->width << "\n";
+
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
         Point* p = itr->second;
         Vec3f color = p->getColor();
@@ -130,88 +132,91 @@ void PointGraph::printGraph() {
 void PointGraph::CombinePoints() {
     //combination algorithm
     //1.732 is max dist
-    std::vector<int> deleteList;
-    for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
-        int index = itr->first;
-        Point* point = itr->second;
-        //can change times combined to match with a global variable later
-        if (/*point->getTimesCombined() == 0 &&*/ std::count(deleteList.begin(), deleteList.end(), index) == 0) {
-            std::set<int> n = point->getNeighbors();
-            std::pair<int, float> closest = { index, 2.0f };
-            for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
-                //should only do combinations with points who have never combined, have not yet been added to graph, or in delete list
-                std::map<int, Point*>::iterator found = graph.find(*it);
-                if (found == graph.end() || std::count(deleteList.begin(), deleteList.end(), *it) != 0) {
-                    continue;
+    int num_combined = 1;
+    while(num_combined != 0) {
+        std::vector<int> deleteList;
+        for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
+            int index = itr->first;
+            Point* point = itr->second;
+            //can change times combined to match with a global variable later
+            if (point->getTimesCombined() < 3 && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
+                std::set<int> n = point->getNeighbors();
+                std::pair<int, float> closest = { index, 2.0f };
+                for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
+                    //should only do combinations with points who have never combined, have not yet been added to graph, or in delete list
+                    std::map<int, Point*>::iterator found = graph.find(*it);
+                    if (found == graph.end() || std::count(deleteList.begin(), deleteList.end(), *it) != 0) {
+                        continue;
+                    }
+                    if (found->second->getTimesCombined() > 2) {
+                        continue;
+                    }
+                    float dist = abs(DistanceBetweenTwoPoints(point->getColor(), found->second->getColor()));
+                    //if (itr == n.begin()) {
+                    //    std::cout << dist << std::endl;
+                    //}
+                    if (dist < closest.second && dist <= GLOBAL_args->threshold) {
+                        //std::cout << "new closest" << std::endl;
+                        closest = std::make_pair(*it, dist);
+                    }
                 }
-                /*
-                if (found->second->getTimesCombined() != 0) {
-                    continue;
-                }
-                */
-                float dist = abs(DistanceBetweenTwoPoints(point->getColor(), found->second->getColor()));
-                //if (itr == n.begin()) {
-                //    std::cout << dist << std::endl;
-                //}
-                if (dist < closest.second && dist <= GLOBAL_args->threshold) {
-                    //std::cout << "new closest" << std::endl;
-                    closest = std::make_pair(*it, dist);
-                }
-            }
-            int index_two = closest.first;
-            //found one within threshold
-            if (index_two != index) {
-                Point* point_two = graph.find(index_two)->second;
+                int index_two = closest.first;
+                //found one within threshold
+                if (index_two != index) {
+                    Point* point_two = graph.find(index_two)->second;
 
-                float p1_weight = (float)(point->getTimesCombined() + 1.0);
-                float p2_weight = (float)(point_two->getTimesCombined() + 1.0);
+                    float p1_weight = (float)(point->getTimesCombined() + 1.0);
+                    float p2_weight = (float)(point_two->getTimesCombined() + 1.0);
 
-                //std::cout << "combining : " << index << " " << closest.first << std::endl;
-                Vec3f avgColor = ((point->getColor() * p1_weight) + (point_two->getColor() * p2_weight));
-                avgColor /= p1_weight + p2_weight; //2.0f;
-                Vec3f avgPosition = ((point->getPosition() * p1_weight) + (point_two->getPosition() * p2_weight));
-                avgPosition /= p1_weight + p2_weight; //2.0f;
-                //combine neighbors
-                std::set<int> n1 = point->getNeighbors();
-                std::set<int> n2 = point_two->getNeighbors();
-                n1.insert(n2.begin(), n2.end());
-                //make sure index and index two aren't in the neighbors set
-                n1.erase(index);
-                n1.erase(index_two);
-                //clean up neighbors
-                cleanUpNeighbors(n1, index, index_two);
-                //make new point with graph next_index
-                Point* new_point = new Point(avgPosition, avgColor, next_point_id, point->getTimesCombined() + 1, n1);
-                //add new one to addList
-                addList.insert(std::pair<int, Point*>(next_point_id, new_point));
-                next_point_id++;
-                //remove old two from map by adding to deletelist
-                deleteList.push_back(index);
-                deleteList.push_back(index_two);
-                //std::cout << "done combining : " << index << " " << closest.first << std::endl;
+                    //std::cout << "combining : " << index << " " << closest.first << std::endl;
+                    Vec3f avgColor = ((point->getColor() * p1_weight) + (point_two->getColor() * p2_weight));
+                    avgColor /= p1_weight + p2_weight; //2.0f;
+                    Vec3f avgPosition = ((point->getPosition() * p1_weight) + (point_two->getPosition() * p2_weight));
+                    avgPosition /= p1_weight + p2_weight; //2.0f;
+                    //combine neighbors
+                    std::set<int> n1 = point->getNeighbors();
+                    std::set<int> n2 = point_two->getNeighbors();
+                    n1.insert(n2.begin(), n2.end());
+                    //make sure index and index two aren't in the neighbors set
+                    n1.erase(index);
+                    n1.erase(index_two);
+                    //clean up neighbors
+                    cleanUpNeighbors(n1, index, index_two);
+                    //make new point with graph next_index
+                    Point* new_point = new Point(avgPosition, avgColor, next_point_id, point->getTimesCombined() + point_two->getTimesCombined() + 1, n1);
+                    //add new one to addList
+                    addList.insert(std::pair<int, Point*>(next_point_id, new_point));
+                    next_point_id++;
+                    //remove old two from map by adding to deletelist
+                    deleteList.push_back(index);
+                    deleteList.push_back(index_two);
+                    //std::cout << "done combining : " << index << " " << closest.first << std::endl;
+                }
             }
         }
+
+        //std::cout << "updating graph" << std::endl;
+
+        //remove all points in delete list
+        for (int i = 0; i < deleteList.size(); i++) {
+            //delete point
+            //std::cout << deleteList[i] << std::endl;
+            delete graph.find(deleteList[i])->second;
+            graph.erase(deleteList[i]);
+        }
+
+        num_combined = addList.size();
+
+        std::cout << "number of points combined: " << num_combined << std::endl;
+
+        //add all points in add list
+        for (std::map<int, Point*>::iterator itr = addList.begin(); itr != addList.end(); itr++) {
+            //add point
+            graph.insert(*itr);
+        }
+
+        addList.clear();
     }
-
-    //std::cout << "updating graph" << std::endl;
-
-    //remove all points in delete list
-    for (int i = 0; i < deleteList.size(); i++) {
-        //delete point
-        //std::cout << deleteList[i] << std::endl;
-        delete graph.find(deleteList[i])->second;
-        graph.erase(deleteList[i]);
-    }
-
-    std::cout << "number of points combined: " << addList.size() << std::endl;
-
-    //add all points in add list
-    for (std::map<int, Point*>::iterator itr = addList.begin(); itr != addList.end(); itr++) {
-        //add point
-        graph.insert(*itr);
-    }
-
-    addList.clear();
 
     WriteGraph();
 }
