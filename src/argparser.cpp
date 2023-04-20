@@ -100,12 +100,9 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
     } else if (std::string(argv[i]) == std::string("--threshold")) {
       i++; assert(i < argc);
       threshold = atof(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_bounces")) {
+    } else if (std::string(argv[i]) == std::string("--outfile")) {
       i++; assert(i < argc);
-      mesh_data->num_bounces = atoi(argv[i]);
-    } else if (std::string(argv[i]) == std::string("--num_shadow_samples")) {
-      i++; assert(i < argc);
-      mesh_data->num_shadow_samples = atoi(argv[i]);
+      out_file = argv[i];
     } else {
       std::cout << "ERROR: unknown command line argument " 
                 << i << ": '" << argv[i] << "'" << std::endl;

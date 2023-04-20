@@ -118,61 +118,6 @@ void Mesh::addFace(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *materia
   }
 }
 
-/*
-void Mesh::addTriangle(Vertex* a, Vertex* b, Vertex* c, Material* material, enum FACE_TYPE face_type) {
-    // create the face
-    Face* f = new Face(material);
-    // create the edges
-    Edge* ea = new Edge(a, b, f);
-    Edge* eb = new Edge(b, c, f);
-    Edge* ec = new Edge(c, d, f);
-    Edge* ed = new Edge(d, a, f);
-    // point the face to one of its edges
-    f->setEdge(ea);
-    // connect the edges to each other
-    ea->setNext(eb);
-    eb->setNext(ec);
-    ec->setNext(ed);
-    ed->setNext(ea);
-    // verify these edges aren't already in the mesh 
-    // (which would be a bug, or a non-manifold mesh)
-    assert(edges.find(std::make_pair(a, b)) == edges.end());
-    assert(edges.find(std::make_pair(b, c)) == edges.end());
-    assert(edges.find(std::make_pair(c, d)) == edges.end());
-    assert(edges.find(std::make_pair(d, a)) == edges.end());
-    // add the edges to the master list
-    edges[std::make_pair(a, b)] = ea;
-    edges[std::make_pair(b, c)] = eb;
-    edges[std::make_pair(c, d)] = ec;
-    edges[std::make_pair(d, a)] = ed;
-    // connect up with opposite edges (if they exist)
-    edgeshashtype::iterator ea_op = edges.find(std::make_pair(b, a));
-    edgeshashtype::iterator eb_op = edges.find(std::make_pair(c, b));
-    edgeshashtype::iterator ec_op = edges.find(std::make_pair(d, c));
-    edgeshashtype::iterator ed_op = edges.find(std::make_pair(a, d));
-    if (ea_op != edges.end()) { ea_op->second->setOpposite(ea); }
-    if (eb_op != edges.end()) { eb_op->second->setOpposite(eb); }
-    if (ec_op != edges.end()) { ec_op->second->setOpposite(ec); }
-    if (ed_op != edges.end()) { ed_op->second->setOpposite(ed); }
-    // add the face to the appropriate master list
-    if (face_type == FACE_TYPE_ORIGINAL) {
-        original_quads.push_back(f);
-        subdivided_quads.push_back(f);
-    }
-    else if (face_type == FACE_TYPE_RASTERIZED) {
-        rasterized_primitive_faces.push_back(f);
-    }
-    else {
-        assert(face_type == FACE_TYPE_SUBDIVIDED);
-        subdivided_quads.push_back(f);
-    }
-    // if it's a light, add it to that list too
-    if ((material->getEmittedColor()).Length() > 0 && face_type == FACE_TYPE_ORIGINAL) {
-        original_lights.push_back(f);
-    }
-}
-*/
-
 void Mesh::removeFaceEdges(Face *f) {
   // helper function for face deletion
   Edge *ea = f->getEdge();

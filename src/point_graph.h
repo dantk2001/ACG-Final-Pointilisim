@@ -48,6 +48,9 @@ class PointGraph {
 
   // RENDERING ??
   void packMesh(float* &current, float* &current_points);
+
+  // WRITING
+  void WriteGraph();
   
  private:
   // REPRESENTATION

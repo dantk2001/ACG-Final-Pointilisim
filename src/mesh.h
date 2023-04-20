@@ -93,10 +93,6 @@ public:
     addFace(a,b,c,d,material,FACE_TYPE_RASTERIZED); }
   void addOriginalQuad(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *material) {
     addFace(a,b,c,d,material,FACE_TYPE_ORIGINAL); }
-  /*
-  void addOriginalTriangle(Vertex* a, Vertex* b, Vertex* c, Material* material) {
-      addTriangle(a, b, c, material, FACE_TYPE_ORIGINAL); }
-  */
   void addSubdividedQuad(Vertex *a, Vertex *b, Vertex *c, Vertex *d, Material *material) {
     addFace(a,b,c,d,material,FACE_TYPE_SUBDIVIDED); }
 

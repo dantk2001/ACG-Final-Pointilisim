@@ -14,6 +14,22 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <filesystem>
+
+
+void PointGraph::WriteGraph() {
+    //Change this to match your own path to Circles
+    std::ofstream out_file("../circles/Circles/" + GLOBAL_args->out_file + ".txt");
+
+    for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
+        Point* p = itr->second;
+        out_file << p->getColor() << " " << p->getPosition() << " " << p->getTimesCombined() << "\n";
+    }
+
+    out_file.close();
+
+    std::cout << "Output to " << GLOBAL_args->out_file << ".txt" << std::endl;
+}
 
 // populate graph
 void PointGraph::GraphPoints() {
@@ -55,6 +71,7 @@ void PointGraph::GraphPoints() {
         }
     }
     //printGraph();
+    WriteGraph();
 }
 
 void PointGraph::Clear() {
@@ -65,21 +82,6 @@ void PointGraph::Clear() {
     graph.clear();
     next_point_id = 0;
 }
-/*
-void drawCircle(double x, double y, double z, float radius)
-{
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x, y);
-    for (int i = 0; i <= 360; i++)
-    {
-        float angle = 2 * M_PI * i / 360;
-        float dx = radius * cosf(angle);
-        float dy = radius * sinf(angle);
-        glVertex2f(x + dx, y + dy);
-    }
-    glEnd();
-}
-*/
 
 void PointGraph::packMesh(float* &current, float* &current_points) {
     for (std::map<int,Point*>::iterator it = graph.begin(); it != graph.end(); it++) {
@@ -125,6 +127,7 @@ void PointGraph::printGraph() {
 
 void PointGraph::CombinePoints() {
     //combination algorithm
+    //1.732 is max dist
     std::vector<int> deleteList;
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
         int index = itr->first;
@@ -154,7 +157,7 @@ void PointGraph::CombinePoints() {
             int index_two = closest.first;
             //found one within threshold
             if (index_two != index) {
-                Point* point_two = graph.find(closest.second)->second;
+                Point* point_two = graph.find(index_two)->second;
 
                 float p1_weight = (float)(point->getTimesCombined() + 1.0);
                 float p2_weight = (float)(point_two->getTimesCombined() + 1.0);
@@ -205,6 +208,8 @@ void PointGraph::CombinePoints() {
     }
 
     addList.clear();
+
+    WriteGraph();
 }
 
 // =========================================================================

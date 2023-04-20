@@ -352,14 +352,12 @@ void OpenGLCanvas::keyboardCB(GLFWwindow* /*window*/, int key, int /*scancode*/,
     case '1': case '!': {
       printf("Pressed key \"1\" yippee!\n");
       PopulatePointGraph();
-      //DrawCircles();
       break;
     }
 
     case '2': case '@': {
       printf("Pressed key \"2\" wowowow!\n");
       CombinePoints();
-      //DrawCircles();
       break;
     }
 

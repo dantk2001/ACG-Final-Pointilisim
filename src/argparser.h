@@ -54,6 +54,7 @@ public:
   std::string input_file;
   std::string path;
   float threshold;
+  std::string out_file;
 
   Mesh *mesh;
   MeshData *mesh_data;
