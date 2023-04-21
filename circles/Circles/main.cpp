@@ -27,7 +27,7 @@ int main(int argc, const char* argv[])
     if (argc < 2) {
         std::cerr << "No input file given" << std::endl;
     }
-    std::ifstream in_file("textured_plane_reflective_sphere.txt");
+    std::ifstream in_file("mclean.txt");
 
     int width;
     int height;
@@ -48,7 +48,7 @@ int main(int argc, const char* argv[])
         //pos should range from -1 to 1
         pos0 = (pos0 - (width / 2)) / (width / 2);
         pos1 = (pos1 - (height / 2)) / (height / 2);
-        float radius = (times_combined + 1) * (1.0f / ((width + height) / 2)) * 5;
+        float radius = (times_combined + 1) * (1.0f / ((width + height) / 2)) * 1.8;
         Point p(pos0, pos1, Vec3f(color0, color1, color2), radius);
         points.push_back(p);
         if (in_file.eof()) {
@@ -67,7 +67,7 @@ int main(int argc, const char* argv[])
 
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+        //glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
         for (int i = 0; i < points.size(); i++) {

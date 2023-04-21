@@ -21,7 +21,7 @@ void PointGraph::WriteGraph() {
     //Change this to match your own path to Circles
     std::ofstream out_file("../circles/Circles/" + GLOBAL_args->out_file + ".txt");
 
-    out_file << GLOBAL_args->mesh_data->height << " " << GLOBAL_args->mesh_data->width << "\n";
+    out_file << GLOBAL_args->mesh_data->width << " " << GLOBAL_args->mesh_data->height << "\n";
 
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
         Point* p = itr->second;
@@ -139,7 +139,7 @@ void PointGraph::CombinePoints() {
             int index = itr->first;
             Point* point = itr->second;
             //can change times combined to match with a global variable later
-            if (point->getTimesCombined() < 3 && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
+            if (point->getTimesCombined() < 2 && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
                 std::set<int> n = point->getNeighbors();
                 std::pair<int, float> closest = { index, 2.0f };
                 for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
@@ -148,7 +148,7 @@ void PointGraph::CombinePoints() {
                     if (found == graph.end() || std::count(deleteList.begin(), deleteList.end(), *it) != 0) {
                         continue;
                     }
-                    if (found->second->getTimesCombined() > 2) {
+                    if (found->second->getTimesCombined() > 1) {
                         continue;
                     }
                     float dist = abs(DistanceBetweenTwoPoints(point->getColor(), found->second->getColor()));
