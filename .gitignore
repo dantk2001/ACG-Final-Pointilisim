@@ -54,3 +54,7 @@ build/CMakeFiles/3.25.1/CompilerIdCXX/CompilerIdCXX.vcxproj
 build/CMakeFiles/3.25.1/VCTargetsPath.txt
 build/CMakeFiles/3.25.1/VCTargetsPath.vcxproj
 src/CMakeCache.txt
+
+circles/Circles/.vs/Circles/v16/ipch/
+
+circles/Circles/.vs/Circles/v16/.suo
