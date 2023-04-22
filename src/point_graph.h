@@ -43,6 +43,7 @@ class PointGraph {
   void setRayTracer(RayTracer* r) { raytracer = r; }
   void GraphPoints(); // populate graph
   void CombinePoints();
+  Point* PostProcessPoint(Point* p);
   void Clear();
   void cleanUpNeighbors(std::set<int> neighbors, int id1, int id2);
 

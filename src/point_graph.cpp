@@ -15,6 +15,7 @@
 #include <set>
 #include <map>
 #include <filesystem>
+#include <cmath>
 
 
 void PointGraph::WriteGraph() {
@@ -24,7 +25,7 @@ void PointGraph::WriteGraph() {
     out_file << GLOBAL_args->mesh_data->width << " " << GLOBAL_args->mesh_data->height << "\n";
 
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
-        Point* p = itr->second;
+        Point* p = PostProcessPoint(itr->second); //Point* p = itr->second;
         Vec3f color = p->getColor();
         Vec3f position = p->getPosition();
         out_file << color[0] << " " << color[1] << " " << color[2] << " " << position[0] << " " << position[1] << " " << p->getTimesCombined() << "\n";
@@ -219,6 +220,56 @@ void PointGraph::CombinePoints() {
     }
 
     WriteGraph();
+}
+
+Point* PointGraph::PostProcessPoint(Point* p) {
+    // random jitter position (ref'd off of utils.h's RandomUnitVector() function)
+    Vec3f posJitter = Vec3f(2*GLOBAL_args->rand()-1, 2*GLOBAL_args->rand()-1, 0);
+    posJitter.Normalize(); posJitter = 0.25 * posJitter; // scale it a bit
+    Vec3f newPos = posJitter + p->getPosition();
+
+    // rgb already [0,1]
+    // rgb to hsl
+    Vec3f color = p->getColor();
+    float max = color.r(); char maxRGB = 'r';
+    if (color.g() > max) { max = color.g(); maxRGB = 'g'; }
+    if (color.b() > max) { max = color.b(); maxRGB = 'b'; }
+    float min = color.r();
+    if (color.g() < min) { min = color.g(); }
+    if (color.b() < min) { min = color.b(); }
+    float delta = max - min;
+
+    float l = (max + min) / 2.0;
+    float s = delta/(1.0 - fabs((2 * l) - 1.0));
+    float h = 0; if (delta != 0) {
+        if (maxRGB == 'r') h = 60.0 * (fmod((color.g() - color.b())/delta, 6.0));
+        if (maxRGB == 'g') h = 60.0 * (((color.b() - color.r())/delta) + 2.0);
+        if (maxRGB == 'b') h = 60.0 * (((color.r() - color.g())/delta) + 4.0);
+    }
+
+    // determine hue shift;
+    float hueShift = 0.0; float base = 90;
+    float dir = 2*GLOBAL_args->rand()-1;
+    if (dir > 0.33) hueShift = base;
+    else if (dir > 0.66) hueShift = 360.0 - base;
+    h += hueShift; h = fmod(h,360.0);
+
+    // hsl back to rgb
+    float c = 1.0 - fabs((2 * l) - 1.0) * s;
+    float x = c * (1.0 - fabs(fmod(h/60.0,2) - 1.0));
+    float m = l - (c/2.0);
+    Vec3f preRGB = Vec3f();
+    if      (h >=     0 && h <  60.0) preRGB = Vec3f(c,x,0);
+    else if (h >=  60.0 && h < 120.0) preRGB = Vec3f(x,c,0);
+    else if (h >= 120.0 && h < 180.0) preRGB = Vec3f(0,c,x);
+    else if (h >= 180.0 && h < 240.0) preRGB = Vec3f(0,x,c);
+    else if (h >= 240.0 && h < 300.0) preRGB = Vec3f(x,0,c);
+    else if (h >= 300.0 && h < 360.0) preRGB = Vec3f(c,0,x);
+
+    Vec3f finalColor = Vec3f(preRGB.r() + m,preRGB.g() + m, preRGB.b() + m);
+
+    Point newPoint = Point(posJitter,finalColor,p->getID(),p->getTimesCombined(),p->getNeighbors());
+    return &newPoint;
 }
 
 // =========================================================================
