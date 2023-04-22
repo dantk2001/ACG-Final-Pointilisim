@@ -241,25 +241,31 @@ Point* PointGraph::PostProcessPoint(Point* p) {
 
     float l = (max + min) / 2.0;
     float s = delta/(1.0 - fabs((2 * l) - 1.0));
-    float h = 0; if (delta != 0) {
+    float h = 0; if (fabs(delta) > EPSILON) {
         if (maxRGB == 'r') h = 60.0 * (fmod((color.g() - color.b())/delta, 6.0));
         if (maxRGB == 'g') h = 60.0 * (((color.b() - color.r())/delta) + 2.0);
         if (maxRGB == 'b') h = 60.0 * (((color.r() - color.g())/delta) + 4.0);
     }
 
     // determine hue shift;
-    float hueShift = 0.0; float base = 90;
+    float hueShift = 0.0; float base = 45;
     float dir = 2*GLOBAL_args->rand()-1;
-    if (dir > 0.33) hueShift = base;
-    else if (dir > 0.66) hueShift = 360.0 - base;
+    if (dir > 0.5) hueShift = base;
+    else if (dir > 0.8) hueShift = 360.0 - base;
     h += hueShift; h = fmod(h,360.0);
+
+    float sat = 2*GLOBAL_args->rand()-1;
+    if (sat > 0.5) {
+        float sat2 = 1.0 + (2*GLOBAL_args->rand()-1);
+        s *= sat; if (s > 1.0) s = 1.0;
+    }
 
     // hsl back to rgb
     float c = (1.0 - fabs((2 * l) - 1.0)) * s;
     float x = c * (1.0 - fabs(fmod(h/60.0,2) - 1.0));
     float m = l - (c/2.0);
     Vec3f preRGB = Vec3f();
-    if      (h >=     0 && h <  60.0) preRGB = Vec3f(c,x,0);
+    if      (h >=EPSILON&& h <  60.0) preRGB = Vec3f(c,x,0);
     else if (h >=  60.0 && h < 120.0) preRGB = Vec3f(x,c,0);
     else if (h >= 120.0 && h < 180.0) preRGB = Vec3f(0,c,x);
     else if (h >= 180.0 && h < 240.0) preRGB = Vec3f(0,x,c);
@@ -267,7 +273,7 @@ Point* PointGraph::PostProcessPoint(Point* p) {
     else if (h >= 300.0 && h < 360.0) preRGB = Vec3f(c,0,x);
 
     Vec3f newColor = Vec3f(preRGB.r() + m,preRGB.g() + m, preRGB.b() + m);
-    //std::cout << color << " OOO " << finalColor << std::endl;
+    if (color.Length() <= EPSILON) newColor = Vec3f();
 
     Point newPoint = Point(newPos,newColor,p->getID(),p->getTimesCombined(),p->getNeighbors());
     return &newPoint;
