@@ -255,7 +255,7 @@ Point* PointGraph::PostProcessPoint(Point* p) {
     h += hueShift; h = fmod(h,360.0);
 
     // hsl back to rgb
-    float c = 1.0 - fabs((2 * l) - 1.0) * s;
+    float c = (1.0 - fabs((2 * l) - 1.0)) * s;
     float x = c * (1.0 - fabs(fmod(h/60.0,2) - 1.0));
     float m = l - (c/2.0);
     Vec3f preRGB = Vec3f();
@@ -266,9 +266,10 @@ Point* PointGraph::PostProcessPoint(Point* p) {
     else if (h >= 240.0 && h < 300.0) preRGB = Vec3f(x,0,c);
     else if (h >= 300.0 && h < 360.0) preRGB = Vec3f(c,0,x);
 
-    Vec3f finalColor = Vec3f(preRGB.r() + m,preRGB.g() + m, preRGB.b() + m);
+    Vec3f newColor = Vec3f(preRGB.r() + m,preRGB.g() + m, preRGB.b() + m);
+    //std::cout << color << " OOO " << finalColor << std::endl;
 
-    Point newPoint = Point(posJitter,finalColor,p->getID(),p->getTimesCombined(),p->getNeighbors());
+    Point newPoint = Point(newPos,newColor,p->getID(),p->getTimesCombined(),p->getNeighbors());
     return &newPoint;
 }
 
