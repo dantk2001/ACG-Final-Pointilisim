@@ -58,3 +58,5 @@ src/CMakeCache.txt
 circles/Circles/.vs/Circles/v16/ipch/
 
 circles/Circles/.vs/Circles/v16/.suo
+
+circles/Circles/Circles.vcxproj

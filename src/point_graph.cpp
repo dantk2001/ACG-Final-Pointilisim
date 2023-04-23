@@ -249,10 +249,14 @@ Point* PointGraph::PostProcessPoint(Point* p) {
 
     // determine hue shift;
     float hueShift = 0.0; float base = 45;
-    float dir = 2*GLOBAL_args->rand()-1;
-    if (dir > 0.5) hueShift = base;
-    else if (dir > 0.8) hueShift = 360.0 - base;
-    h += hueShift; h = fmod(h,360.0);
+    float shade_prob = 1 - color.Length();
+    //the darker it is the more complementary colors appear
+    if (2*GLOBAL_args->rand()-1 < shade_prob) {
+        float dir = 2*GLOBAL_args->rand()-1; // it's then split evenly 1/2 and 1/2 for which direction
+        if (dir > 0.5) hueShift = base;
+        else hueShift = 360.0 - base;
+        h += hueShift; h = fmod(h,360.0);
+    }
 
     float sat = 2*GLOBAL_args->rand()-1;
     if (sat > 0.5) {
