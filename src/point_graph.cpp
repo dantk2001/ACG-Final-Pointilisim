@@ -224,8 +224,10 @@ void PointGraph::CombinePoints() {
 
 Point* PointGraph::PostProcessPoint(Point* p) {
     // random jitter position (ref'd off of utils.h's RandomUnitVector() function)
+    float jitterScale = 2;
+    if (p->getTimesCombined() <= 1) jitterScale = 50;
     Vec3f posJitter = Vec3f(2*GLOBAL_args->rand()-1, 2*GLOBAL_args->rand()-1, 0);
-    posJitter.Normalize(); posJitter = 0.25 * posJitter; // scale it a bit
+    posJitter.Normalize(); posJitter = jitterScale * posJitter; // scale it a bit
     Vec3f newPos = posJitter + p->getPosition();
 
     // rgb already [0,1]
@@ -259,7 +261,7 @@ Point* PointGraph::PostProcessPoint(Point* p) {
     }
 
     float sat = 2*GLOBAL_args->rand()-1;
-    if (sat > 0.5) {
+    if (sat > 0.3) {
         float sat2 = 1.0 + (2*GLOBAL_args->rand()-1);
         s *= sat; if (s > 1.0) s = 1.0;
     }
