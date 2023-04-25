@@ -55,6 +55,8 @@ public:
   std::string path;
   float threshold;
   std::string out_file;
+  bool post_process;
+  int comb_max;
 
   Mesh *mesh;
   MeshData *mesh_data;

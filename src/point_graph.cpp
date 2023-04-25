@@ -19,13 +19,18 @@
 
 
 void PointGraph::WriteGraph() {
-    //Change this to match your own path to Circles
     std::ofstream out_file("../circles/Circles/" + GLOBAL_args->out_file + ".txt");
 
     out_file << GLOBAL_args->mesh_data->width << " " << GLOBAL_args->mesh_data->height << "\n";
 
     for (std::map<int, Point*>::iterator itr = graph.begin(); itr != graph.end(); itr++) {
-        Point* p = PostProcessPoint(itr->second); //Point* p = itr->second;
+        Point* p;
+        if (GLOBAL_args->post_process) {
+            p = PostProcessPoint(itr->second);
+        }
+        else {
+            p = itr->second;
+        }
         Vec3f color = p->getColor();
         Vec3f position = p->getPosition();
         out_file << color[0] << " " << color[1] << " " << color[2] << " " << position[0] << " " << position[1] << " " << p->getTimesCombined() << "\n";
@@ -40,9 +45,6 @@ void PointGraph::WriteGraph() {
 void PointGraph::GraphPoints() {
     // throw away everything beforehand
     Clear();
-
-    // GLOBAL_args->mesh_data->height and width are 500x500
-    // let's just do a nice 100x100 for now.
     int div = 5;
     int rows = GLOBAL_args->mesh_data->height / div;
     int cols = GLOBAL_args->mesh_data->width  / div;
@@ -75,7 +77,6 @@ void PointGraph::GraphPoints() {
             next_point_id++;
         }
     }
-    //printGraph();
     WriteGraph();
 }
 
@@ -94,7 +95,6 @@ void PointGraph::packMesh(float* &current, float* &current_points) {
         Vec3f color = it->second->getColor();
         float12 t = { float(v.x()),float(v.y()),float(v.z()),1,   0,0,0,0,   float(color.r()),float(color.g()),float(color.b()),1 };
         memcpy(current_points, &t, sizeof(float)*12); current_points += 12;
-        //drawCircle(v.x(), v.y(), v.z(), it->second->getTimesCombined() * 0.01);
     }
 }
 
@@ -132,7 +132,8 @@ void PointGraph::printGraph() {
 
 void PointGraph::CombinePoints() {
     //combination algorithm
-    //1.732 is max dist
+    //1.732 is max dist between colors
+    int max_comb = GLOBAL_args->comb_max;
     int num_combined = 1;
     while(num_combined != 0) {
         std::vector<int> deleteList;
@@ -140,7 +141,7 @@ void PointGraph::CombinePoints() {
             int index = itr->first;
             Point* point = itr->second;
             //can change times combined to match with a global variable later
-            if (point->getTimesCombined() < 2 && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
+            if (point->getTimesCombined() < max_comb && std::count(deleteList.begin(), deleteList.end(), index) == 0) {
                 std::set<int> n = point->getNeighbors();
                 std::pair<int, float> closest = { index, 2.0f };
                 for (std::set<int>::iterator it = n.begin(); it != n.end(); it++) {
@@ -149,15 +150,11 @@ void PointGraph::CombinePoints() {
                     if (found == graph.end() || std::count(deleteList.begin(), deleteList.end(), *it) != 0) {
                         continue;
                     }
-                    if (found->second->getTimesCombined() > 1) {
+                    if (found->second->getTimesCombined() > (max_comb - 1)) {
                         continue;
                     }
                     float dist = abs(DistanceBetweenTwoPoints(point->getColor(), found->second->getColor()));
-                    //if (itr == n.begin()) {
-                    //    std::cout << dist << std::endl;
-                    //}
                     if (dist < closest.second && dist <= GLOBAL_args->threshold) {
-                        //std::cout << "new closest" << std::endl;
                         closest = std::make_pair(*it, dist);
                     }
                 }
@@ -169,11 +166,10 @@ void PointGraph::CombinePoints() {
                     float p1_weight = (float)(point->getTimesCombined() + 1.0);
                     float p2_weight = (float)(point_two->getTimesCombined() + 1.0);
 
-                    //std::cout << "combining : " << index << " " << closest.first << std::endl;
                     Vec3f avgColor = ((point->getColor() * p1_weight) + (point_two->getColor() * p2_weight));
-                    avgColor /= p1_weight + p2_weight; //2.0f;
+                    avgColor /= p1_weight + p2_weight;
                     Vec3f avgPosition = ((point->getPosition() * p1_weight) + (point_two->getPosition() * p2_weight));
-                    avgPosition /= p1_weight + p2_weight; //2.0f;
+                    avgPosition /= p1_weight + p2_weight;
                     //combine neighbors
                     std::set<int> n1 = point->getNeighbors();
                     std::set<int> n2 = point_two->getNeighbors();
@@ -191,17 +187,13 @@ void PointGraph::CombinePoints() {
                     //remove old two from map by adding to deletelist
                     deleteList.push_back(index);
                     deleteList.push_back(index_two);
-                    //std::cout << "done combining : " << index << " " << closest.first << std::endl;
                 }
             }
         }
 
-        //std::cout << "updating graph" << std::endl;
-
         //remove all points in delete list
         for (int i = 0; i < deleteList.size(); i++) {
             //delete point
-            //std::cout << deleteList[i] << std::endl;
             delete graph.find(deleteList[i])->second;
             graph.erase(deleteList[i]);
         }

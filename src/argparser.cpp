@@ -113,7 +113,20 @@ ArgParser::ArgParser(int argc, const char *argv[], MeshData *_mesh_data) {
     } else if (std::string(argv[i]) == std::string("--outfile")) {
       i++; assert(i < argc);
       out_file = argv[i];
-    } else {
+    } else if (std::string(argv[i]) == std::string("--postprocessing")) {
+      i++; assert(i < argc);
+      if (atoi(argv[i]) == 0) {
+          post_process = false;
+      }
+      else {
+          post_process = true;
+      }
+    }
+    else if (std::string(argv[i]) == std::string("--combination")) {
+        i++; assert(i < argc);
+        comb_max = atoi(argv[i]);
+    }
+    else {
       std::cout << "ERROR: unknown command line argument " 
                 << i << ": '" << argv[i] << "'" << std::endl;
       exit(1);
@@ -201,7 +214,6 @@ void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, P
 
   mesh_data->meshTriCount = triCount;
   if (mesh_data->meshTriCount > mesh_data->meshTriCount_allocated) {
-    //std::cout << "resize triCount " << mesh_data->meshTriCount << std::endl;
     delete [] mesh_data->meshTriData;
     mesh_data->meshTriData = new float[2 * 12*3* mesh_data->meshTriCount];
     mesh_data->meshTriCount_allocated = 2 * triCount;
@@ -209,7 +221,6 @@ void packMesh(MeshData *mesh_data, RayTracer *raytracer, Radiosity *radiosity, P
 
   mesh_data->meshPointCount = pointCount;
   if (mesh_data->meshPointCount > mesh_data->meshPointCount_allocated) {
-    //std::cout << "resize pointCount " << mesh_data->meshPointCount << std::endl;
     delete [] mesh_data->meshPointData;
     mesh_data->meshPointData = new float[2 * 12* mesh_data->meshPointCount];
     mesh_data->meshPointCount_allocated = 2 * pointCount;
